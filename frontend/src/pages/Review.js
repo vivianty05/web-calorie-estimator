@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Review.css";
 
 const Review = () => {
   const detectionTime = new Date().toLocaleString();
+  const navigate = useNavigate();
 
   const [detectedItems, setDetectedItems] = useState([
-    { name: "Onion", confidence: 98, count: 7, unit: "pieces" },
-    { name: "Salt", confidence: 95, count: 1000, unit: "grams" },
-    { name: "Egg", confidence: 95, count: 3, unit: "pieces" },
-    { name: "Baking Powder", confidence: 95, count: 90, unit: "grams" },
-    { name: "AP Flour", confidence: 86, count: 1000, unit: "grams" }
+    { name: "Onion", confidence: 98, count: 7, unit: "pieces", caloriesPerUnit: 40 },
+    { name: "Salt", confidence: 95, count: 1000, unit: "grams", caloriesPerUnit: 0 },
+    { name: "Egg", confidence: 95, count: 3, unit: "pieces", caloriesPerUnit: 70 },
+    { name: "Baking Powder", confidence: 95, count: 90, unit: "grams", caloriesPerUnit: 2 },
+    { name: "AP Flour", confidence: 86, count: 1000, unit: "grams", caloriesPerUnit: 3.64 }
   ]);
 
   const [showModal, setShowModal] = useState(false);
@@ -35,11 +37,14 @@ const Review = () => {
     setDetectedItems(updated);
   };
 
+  const handleCalculateClick = () => {
+    setShowModal(false);
+    navigate("/calculate", { state: { ingredients: detectedItems } });
+  };
+
   return (
     <div className="review-page">
-      <h2 className="review-title">
-        <span role="img" aria-label="check">✅</span> Part 2: Review Detection
-      </h2>
+      <h2 className="review-title">Part 2: Review Detection</h2>
 
       <p className="detection-time">Detection Result • {detectionTime}</p>
 
@@ -50,7 +55,7 @@ const Review = () => {
           className="detected-image"
         />
         <p className="review-message">
-          Detected {detectedItems.length} ingredients. Please review and adjust quantities below.
+          Detected {detectedItems.length} ingredients. Please review and adjust the quantities below.
         </p>
       </div>
 
@@ -87,7 +92,7 @@ const Review = () => {
         </button>
       </div>
 
-      {/* ✅ Modal Popup */}
+      {/* Modal Popup */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -110,7 +115,7 @@ const Review = () => {
             </ul>
             <div className="modal-buttons">
               <button className="cancel-button" onClick={() => setShowModal(false)}>Cancel</button>
-              <button className="confirm-button">Calculate Calories</button>
+              <button className="confirm-button" onClick={handleCalculateClick}>Calculate Calories</button>
             </div>
           </div>
         </div>

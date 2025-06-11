@@ -1,24 +1,20 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../pages/Header";
-import "./Calculate.css";
+import "./History.css";
 
-const Calculate = () => {
+const History = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Example: received ingredient list with quantities and calorie info
-  // If none provided, fallback to empty list
-  const ingredients = location.state?.ingredients || [
-    { name: "Onion", count: 7, unit: "pieces", caloriesPerUnit: 40 },
-    { name: "Salt", count: 1000, unit: "grams", caloriesPerUnit: 0 },
-    { name: "Egg", count: 3, unit: "pieces", caloriesPerUnit: 70 },
-    { name: "Baking Powder", count: 90, unit: "grams", caloriesPerUnit: 2 },
-    { name: "AP Flour", count: 1000, unit: "grams", caloriesPerUnit: 3.64 },
-  ];
+  const food = location.state;
 
-  // Calculate calories for each ingredient and total
-  const ingredientsWithCalories = ingredients.map(item => ({
+  if (!food) {
+    navigate("/");
+    return null;
+  }
+
+  const ingredientsWithCalories = food.ingredients.map((item) => ({
     ...item,
     calories: (item.count || 0) * item.caloriesPerUnit,
   }));
@@ -27,8 +23,10 @@ const Calculate = () => {
 
   return (
     <Header>
-      <div className="calculate-page">
-        <h2>Part 3: Calorie Calculation</h2>
+      <div className="history-page">
+        <h2 className="food-title">{food.title}</h2>
+        <img src={food.image} alt={food.title} className="food-image" />
+
         <div className="ingredients-list">
           {ingredientsWithCalories.map((item, index) => (
             <div key={index} className="ingredient-row">
@@ -40,13 +38,23 @@ const Calculate = () => {
             </div>
           ))}
         </div>
+
         <div className="total-calories">
           <strong>Total Calories:</strong> {totalCalories.toFixed(2)} kcal
         </div>
-        <button className="back-button" onClick={() => navigate(-1)}>Back</button>
       </div>
+
+      {/* Floating Back Button Bottom Left */}
+      <button
+        className="floating-back-button"
+        onClick={() => navigate("/")}
+        aria-label="Back to Home"
+        title="Back to Home"
+      >
+        ←
+      </button>
     </Header>
   );
 };
 
-export default Calculate;
+export default History;
