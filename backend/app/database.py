@@ -7,3 +7,10 @@ DATABASE_URL = "postgresql://postgres:Theodora1234#!@localhost:5432/FoodCalorieC
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+def get_db():                   # Create a connection to the database
+    db = SessionLocal()
+    try:                        # Try something because it can fail
+        yield db                # Try to open it
+    finally:
+        db.close()              # No matter what we will also close the connection

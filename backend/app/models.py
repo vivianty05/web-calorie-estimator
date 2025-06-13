@@ -9,7 +9,8 @@ class FoodEntry(Base):      # Creating the first table in our database
     # Entering the columns in this table
     id = Column(Integer, primary_key=True, index=True)      # index=True here just makes querying for this specific column id faster and optimized
     food_name = Column(String, nullable=False)              # nullable=False here means that the column cannot be left empty in the database
-    total_calories = Column(Integer)
+    total_calories = Column(Integer, nullable=True)
+    image_path = Column(String, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)   # If no value given, automatically use the current UTC date and time
 
     ingredients = relationship("Ingredient", back_populates="food")     
@@ -26,7 +27,14 @@ class Ingredient(Base):
     food_id = Column(Integer, ForeignKey("food_entries.id"))
     name = Column(String)
     quantity = Column(Float)
-    unit = Column(String)
-    calories = Column(Integer)
+    unit_id = Column(Integer, ForeignKey("units.id"))
+    calories = Column(Integer, nullable=True)
 
     food = relationship("FoodEntry", back_populates="ingredients")
+    unit = relationship("IngredientUnit")
+
+class IngredientUnit(Base):
+    __tablename__ = "units"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, nullable=False)
+    description = Column(String, nullable=True)             # Explanation of the abbreviation (e.g. g for grams)

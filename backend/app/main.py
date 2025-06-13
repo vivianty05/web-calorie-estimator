@@ -1,61 +1,47 @@
-from fastapi import FastAPI, Depends, HTTPException
-from pydantic import BaseModel      # Define data schemas for cleaner validation, parsing, and documentation, good for error handling and API docs
-from typing import List, Annotated, Literal
+from fastapi import FastAPI
 from app import models
 from app.database import engine, SessionLocal
 from sqlalchemy.orm import Session
+from app.routes import router
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+load_dotenv()       # To load the environment variables (put this before the app initialization)
 
 app = FastAPI()
-models.Base.metadata.create_all(bind=engine)        # This will create all the tables and columns in our postgres
+models.Base.metadata.create_all(bind=engine)        # This will create all the tables and columns in our postgres if not yet exist
+app.include_router(router)      # register all routes from routes.py here
 
-class IngredientBase(BaseModel):
-    name: str
-    quantity: float
-    unit: Literal["g", "ml", "pcs", "tbsp", "tsp"]      # Might need an additional database table, but for now this will do
-    calories: int
+# Defining the URL that can access this backend
+origins = [
+    "http://localhost:3000",
+    "http://192.168.0.224:3000"
+]
 
-class FoodEntryBase(BaseModel):
-    food_name: str
-    total_calories: int
-    ingredients: List[IngredientBase]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,            # Allow frontend to talk to backend
+    allow_credentials=True,           # Allow cookies, auth headers, etc.
+    allow_methods=["*"],              # Allow all HTTP methods: GET, POST, PUT...
+    allow_headers=["*"]               # Allow all custom headers
+)
 
-def get_db():                   # Create a connection to the database
-    db = SessionLocal()
-    try:                        # Try something because it can fail
-        yield db                # Try to open it
-    finally:
-        db.close()              # No matter what we will also close the connection
+# Seeding logic runs once at startup
+@app.on_event("startup")
+def adding_predefined_unit_list():
+    db: Session = SessionLocal()
+    default_units = {
+        "g": "grams",
+        "ml": "milliliters",
+        "pcs":"pieces",
+        "tbsp":"tablespoon",
+        "tsp":"teaspoon"
+    }
 
-# Writing API endpoints for our whole FastAPI application
-        
-db_dependency = Annotated[Session, Depends(get_db)]     # A shortcut for injecting a database session
+    for name, description in default_units.items():
+        exists = db.query(models.IngredientUnit).filter(models.IngredientUnit.name == name).first()
+        if not exists:
+            db.add(models.IngredientUnit(name=name, description=description))
 
-@app.post("/enter-food/")
-async def enter_food(foodentry: FoodEntryBase, db: db_dependency):      # Passing a data validation to our API request, then create a connection between the FastAPI app and db
-    try:                    # Use try so that it doesn't give duplicate entries in the food_entries table
-        db_food = models.FoodEntry(
-            food_name=foodentry.food_name, 
-            total_calories=foodentry.total_calories
-        )
-        db.add(db_food)
-        db.flush()          # Get db_food.id without committing
-
-        
-        for ingredient in foodentry.ingredients:
-            db_ingredient = models.Ingredient(
-                name=ingredient.name, 
-                quantity=ingredient.quantity, 
-                unit=ingredient.unit, 
-                calories=ingredient.calories, 
-                food_id=db_food.id
-            )
-            db.add(db_ingredient)
-
-        db.commit()
-        db.refresh(db_food)
-        return {"message": "Entry saved"}
-    
-    except Exception as e:
-        db.rollback()       # Cancel the transaction if anything fails
-        print("Error:", e)
-        raise HTTPException(status_code=500, detail="Something went wrong.")           # Where does this show up?
+    db.commit()
+    db.close()
