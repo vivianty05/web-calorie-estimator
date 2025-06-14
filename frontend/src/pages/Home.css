@@ -1,105 +1,110 @@
 .home-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 1rem 4rem;
-    box-sizing: border-box;
-    text-align: center;
-  }
-  
-  .search-bar-container {
-    max-width: 600px;
-    margin: 0 auto 2rem;
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border-radius: 12px;
-    border: 1px solid #cbd5e1;
-    outline-offset: 2px;
-    transition: border-color 0.2s ease;
-  }
-  
-  .search-input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
-  }
-  
-  .history-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-    padding-bottom: 4rem; /* space for floating button */
-  }
-  
-  .history-card {
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    user-select: none;
-  }
-  
-  .history-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .history-image {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-  }
-  
-  .history-info {
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .history-info h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.1rem;
-    color: #1e40af;
-  }
-  
-  .history-info p {
-    margin: 0;
-    font-weight: 600;
-    color: #2563eb;
-  }
-  
-  .no-results {
-    text-align: center;
-    color: #6b7280;
-    font-size: 1rem;
-    grid-column: 1 / -1;
-  }
-  
-  /* Floating add button bottom right */
-  .floating-add-button {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: #2563eb;
-    color: white;
-    font-size: 2.5rem;
-    line-height: 56px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
-    transition: background-color 0.2s ease;
-    user-select: none;
-    z-index: 1000;
-  }
-  
-  .floating-add-button:hover {
-    background-color: #1e40af;
-  }
-  
+  max-width: 100%;
+  padding: 0 1rem 4rem;
+  box-sizing: border-box;
+  background-color: #f5f6fa;
+}
+
+/* Reusable centering wrapper */
+.centered-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.search-bar-container {
+  margin: 2rem auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  outline-offset: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding-bottom: 4rem; /* space for floating button */
+}
+
+.history-card {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.history-card:hover {
+  transform: translateY(-5px);
+}
+
+.history-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.history-info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.history-info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #1e40af;
+}
+
+.history-info p {
+  margin: 0;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.no-results {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  grid-column: 1 / -1;
+}
+
+/* Floating add button bottom right */
+.floating-add-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #2563eb;
+  color: white;
+  font-size: 2.5rem;
+  line-height: 56px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
+  transition: background-color 0.2s ease;
+  user-select: none;
+  z-index: 1000;
+}
+
+.floating-add-button:hover {
+  background-color: #1e40af;
+}

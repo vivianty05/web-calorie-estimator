@@ -1,109 +1,198 @@
 .upload-page {
-    padding: 2rem;
-    display: flex;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #1c1c1e;
+}
+
+.centered-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* Food name input section */
+.food-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.food-prompt {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1c1c1e;
+  text-align: center;
+}
+
+.food-input-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.food-input {
+  flex: 1 1 60%;
+  min-width: 240px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+.food-submit-button {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+.food-submit-button:hover {
+  background-color: #2563eb;
+}
+
+/* Disabled state */
+.food-input:disabled {
+  background-color: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.food-submit-button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+/* Upload section layout */
+#upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 50vh;
+  width: 100%;
+}
+
+.image-preview {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+.upload-box {
+  border: 2px dashed #89aaff;
+  background-color: #e8f0fe;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+}
+
+.upload-box:hover {
+  background-color: #d8e6fd;
+  transform: translateY(-2px);
+}
+
+.upload-icon {
+  font-size: 2.5rem;
+  color: #3b82f6;
+  margin-bottom: 1rem;
+}
+
+.upload-text p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.upload-dropdown {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.dropdown-option {
+  padding: 0.75rem 1rem;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdown-option:hover {
+  background-color: #f3f4f6;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-top: 0.75rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.success {
+  color: #10b981;
+  font-weight: bold;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 480px) {
+  .food-input-row {
     flex-direction: column;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    background-color: #f5f6fa;
-    height: 100vh;
-    box-sizing: border-box;
+    align-items: stretch;
   }
-  
-  .step-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: #1c1c1e;
+
+  .food-input,
+  .food-submit-button {
+    width: 100%;
   }
-  
-  .image-preview {
-    width: 90%;
-    max-width: 400px;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    object-fit: cover;
-  }
-  
+
   .upload-box {
-    border: 2px dashed #89aaff;
-    background-color: #e8f0fe;
-    padding: 2rem;
-    text-align: center;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 400px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
   }
-  
-  .upload-box:hover {
-    background-color: #d8e6fd;
-    transform: translateY(-2px);
-  }
-  
-  .upload-icon {
-    font-size: 2.5rem;
-    color: #3b82f6;
-    margin-bottom: 1rem;
-  }
-  
-  .upload-text p {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
-  /* Adjust dropdown container */
-  .upload-dropdown {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 90%;
-    max-width: 400px;
-  }
-  
-  /* Dropdown options with emoji spacing */
-  .dropdown-option {
-    padding: 0.75rem 1rem;
-    background-color: white;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  
-    /* Make emoji and text aligned nicely */
-    display: flex;
-    align-items: center;
-    gap: 0.5rem; /* space between emoji and text */
-  }
-  
-  .dropdown-option:hover {
-    background-color: #f3f4f6;
-  }
-  
-  .loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3b82f6;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    animation: spin 1s linear infinite;
-    display: inline-block;
-    margin-top: 0.75rem;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .success {
-    color: #10b981; /* Green tone */
-    font-weight: bold;
-  }
-  
+}

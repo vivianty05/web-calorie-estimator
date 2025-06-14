@@ -1,74 +1,91 @@
 .calculate-page {
-    padding: 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    background-color: #f5f6fa;
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .ingredients-list {
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    padding: 1rem;
-    background-color: #f9fafb;
-    margin-bottom: 1.5rem;
-  }
-  
-  .ingredient-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .ingredient-row:last-child {
-    border-bottom: none;
-  }
-  
-  .ingredient-name {
-    flex: 2;
-    font-weight: 600;
-  }
-  
-  .ingredient-quantity {
-    flex: 1;
-    text-align: center;
-    color: #374151;
-  }
-  
-  .ingredient-calories {
-    flex: 1;
-    text-align: right;
-    font-weight: 600;
-    color: #2563eb;
-  }
-  
-  .total-calories {
-    font-size: 1.25rem;
-    text-align: right;
-    margin-bottom: 2rem;
-    color: #1e40af;
-  }
-  
-  .back-button {
-    display: block;
-    margin: 0 auto;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-  
-  .back-button:hover {
-    background-color: #2563eb;
-  }
-  
+  padding: 2rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Wrap main content in a centered layout */
+.centered-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* ✅ Added: food name style */
+.food-name-display {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #2563eb;
+}
+
+.ingredients-list {
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: #f9fafb;
+  margin-bottom: 1.5rem;
+}
+
+.ingredient-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ingredient-row:last-child {
+  border-bottom: none;
+}
+
+.ingredient-name {
+  flex: 2;
+  font-weight: 600;
+}
+
+.ingredient-quantity {
+  flex: 1;
+  text-align: center;
+  color: #374151;
+}
+
+.ingredient-calories {
+  flex: 1;
+  text-align: right;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.total-calories {
+  font-size: 1.25rem;
+  text-align: right;
+  margin-bottom: 2rem;
+  color: #1e40af;
+}
+
+.done-button {
+  display: block;
+  margin: 0 auto;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.done-button:hover {
+  background-color: #059669;
+}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../pages/Header";
 import "./Home.css";
 
 const mockHistory = [
@@ -20,31 +19,33 @@ const Home = () => {
   );
 
   return (
-    <Header>
-      <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Search past foods..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-      </div>
+    <div className="home-page">
+      <div className="centered-container">
+        <div className="search-bar-container">
+          <input
+            type="text"
+            placeholder="Search past foods..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
 
-      <div className="history-grid">
-        {filteredHistory.length > 0 ? (
-          filteredHistory.map((item) => (
-            <div key={item.id} className="history-card">
-              <img src={item.image} alt={item.title} className="history-image" />
-              <div className="history-info">
-                <h3>{item.title}</h3>
-                <p>{item.calories} kcal</p>
+        <div className="history-grid">
+          {filteredHistory.length > 0 ? (
+            filteredHistory.map((item) => (
+              <div key={item.id} className="history-card">
+                <img src={item.image} alt={item.title} className="history-image" />
+                <div className="history-info">
+                  <h3>{item.title}</h3>
+                  <p>{item.calories} kcal</p>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p className="no-results">No matching food found.</p>
-        )}
+            ))
+          ) : (
+            <p className="no-results">No matching food found.</p>
+          )}
+        </div>
       </div>
 
       <button
@@ -55,7 +56,7 @@ const Home = () => {
       >
         +
       </button>
-    </Header>
+    </div>
   );
 };
 
