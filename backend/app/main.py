@@ -33,7 +33,6 @@ def adding_predefined_unit_list():
     default_units = {
         "g": "grams",
         "ml": "milliliters",
-        "pcs":"pieces",
         "tbsp":"tablespoon",
         "tsp":"teaspoon"
     }
