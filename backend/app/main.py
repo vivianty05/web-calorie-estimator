@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.routes import router
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
 
 load_dotenv()       # To load the environment variables (put this before the app initialization)
 
@@ -25,6 +26,8 @@ app.add_middleware(
     allow_methods=["*"],              # Allow all HTTP methods: GET, POST, PUT...
     allow_headers=["*"]               # Allow all custom headers
 )
+
+app.mount("/images", StaticFiles(directory="images"), name="images")
 
 # Seeding logic runs once at startup
 @app.on_event("startup")

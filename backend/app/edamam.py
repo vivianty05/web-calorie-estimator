@@ -11,7 +11,6 @@ EDAMAM_APP_KEY = os.getenv("EDAMAM_APP_KEY")
 unit_map = {
     "g": "Gram",
     "ml": "Milliliter",
-    "pcs": "Piece",
     "tbsp": "Tablespoon",
     "tsp": "Teaspoon"
 }

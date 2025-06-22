@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.schemas import FoodEntryReview, UnitBase, FoodEntryResponse, IngredientBase
 import os, time, shutil
 from app.edamam import get_calories_per_ingredient
+from app.cv_core.yolo_detector import detect_ingredients
 
 router = APIRouter()
 
@@ -22,8 +23,8 @@ def upload_image(
         timestamp = int(time.time())
         extension = file.filename.split(".")[-1]        # extracts the file extension from the uploaded filename to keep the correct format of the image
         filename = f"{timestamp}_{file.filename}"
-        image_path = f"images/{filename}"
-        os.makedirs("images", exist_ok=True)            # creates the folder images/ if it doesn't exist
+        image_path = f"images/uploaded/{filename}"
+        os.makedirs("images/uploaded", exist_ok=True)            # creates the folder images/ if it doesn't exist
 
         # Save the image
         with open(image_path, "wb") as buffer:
@@ -39,7 +40,7 @@ def upload_image(
         db.refresh(food_entry)
         return {
             "message": "Saved",
-            "food name": food_entry.food_name,
+            "food_name": food_entry.food_name,
             "food_entry_id": food_entry.id,
             "image_path": food_entry.image_path
         }
@@ -55,12 +56,16 @@ async def submit_food(
     db: db_dependency):               # Create a connection between the FastAPI app and db
     try:                              # Use try so that it doesn't give duplicate entries in the food_entries table
         # Fetch existing entry instead of creating new one
-        db_food = db.query(models.FoodEntry).filter(models.FoodEntry.id == foodentry.food_name_id).first()
+        db_food = db.query(models.FoodEntry).filter(models.FoodEntry.id == foodentry.id).first()
         if not db_food:
             raise HTTPException(status_code=404, detail="Food entry not found")
 
         # Update food name if user edits it
         db_food.food_name = foodentry.food_name
+
+        existing_ingredients = db.query(models.Ingredient).filter(models.Ingredient.food_id == db_food.id).all()
+        if existing_ingredients:
+            db.query(models.Ingredient).filter(models.Ingredient.food_id == db_food.id).delete()
 
         total = 0
 
@@ -98,7 +103,7 @@ async def submit_food(
     except Exception as e:
         db.rollback()       # Cancel the transaction if anything fails
         print("Error:", e)
-        raise HTTPException(status_code=500, detail=f"Something went wrong: {str(e)}")           # Where does this show up?
+        raise HTTPException(status_code=500, detail=f"Something went wrong: {str(e)}")           
 
 @router.post("/calculate-calories-per-ingredient/")          # for updating real-time calories per ingredient
 async def calculate_single_ingredient(ingredient: IngredientBase):
@@ -167,3 +172,27 @@ def delete_entry(
     db.delete(entry)
     db.commit()
     return {"message": "Food record deleted"}
+
+@router.post("/detect-ingredients/")
+async def detect_ingredients_from_image(file:UploadFile = File(...)):
+    try:
+        timestamp = int(time.time())
+        extension = file.filename.split(".")[-1]
+        filename = f"{timestamp}_{file.filename}"
+
+        image_path = f"images/temp/{filename}"
+        os.makedirs("images/temp", exist_ok=True)
+
+        with open(image_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        detected = detect_ingredients(image_path, save_result=True)
+
+        os.remove(image_path)
+
+        return {"detected_ingredients": detected}
+    
+    except Exception as e:
+        print("Detection failed:", e)
+        raise HTTPException(status_code=500, detail="Detection failed.")
+    

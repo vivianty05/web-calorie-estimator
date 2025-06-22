@@ -8,4 +8,5 @@ venv/
 .env
 
 # Uploaded files
-images/
+images/debug/
+images/temp/
