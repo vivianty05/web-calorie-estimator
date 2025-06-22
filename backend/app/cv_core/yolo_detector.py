@@ -22,5 +22,5 @@ def detect_ingredients(imagepath: str, save_result=False):
             label = names[int(cls)]
             label_counts[label] += 1
 
-    output = [{"name": label, "quantity": count} for label, count in label_counts.items()]
+    output = [{"name": label.replace("_", " ").lower(), "quantity": count} for label, count in label_counts.items()]
     return output
