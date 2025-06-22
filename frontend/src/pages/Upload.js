@@ -2,6 +2,10 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Upload.css";
 
+// ✅ Use backend URL from .env file
+// const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = "http://127.0.0.1:8000";
+
 const Upload = () => {
   const [foodName, setFoodName] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -25,23 +29,52 @@ const Upload = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (!file) return;
+
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result);
+
+    reader.onloadend = async () => {
+      const base64 = reader.result;
+      setImage(base64);
       setStatus("loading");
 
-      setTimeout(() => {
-        document.getElementById("upload-section")?.scrollIntoView({ behavior: "smooth" });
+      const formData = new FormData();
+      formData.append("food_name", foodName);
+      formData.append("file", file);
+
+      try {
+        const response = await fetch(`${BASE_URL}/upload-image/`, {
+        // const response = await fetch(`https://127.0.0.1:8000/upload-image/`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const text = await response.text();
+          console.error("❌ Server error:", response.status, text);
+          throw new Error("Upload failed");
+        }
+
+        const data = await response.json();
+        setStatus("done");
 
         setTimeout(() => {
-          setStatus("done");
-
-          // ✅ Save food name to localStorage and pass it through state
-          localStorage.setItem("foodName", foodName);
-          setTimeout(() => navigate("/review", { state: { foodName } }), 1500);
+          navigate("/review", {
+            state: {
+              foodName: data["food name"],
+              // foodName: data."food_name",
+              image: base64,
+              foodEntryId: data.food_entry_id,
+              // totalCalories: Optional[int]
+            },
+          });
         }, 1500);
-      }, 300);
+      } catch (error) {
+        console.error("❌ Upload error:", error);
+        setStatus("idle");
+        alert("Upload failed. Please try again.");
+      }
     };
+
     reader.readAsDataURL(file);
   };
 
@@ -53,7 +86,7 @@ const Upload = () => {
   };
 
   const getStatusDescription = () => {
-    if (status === "loading") return "Analyzing the photo to detect ingredients...";
+    if (status === "loading") return "Analyzing and uploading the photo...";
     if (status === "done") return "Redirecting to detected results...";
     return "Make sure the image is clear for accurate detection.";
   };

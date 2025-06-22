@@ -107,9 +107,18 @@
   margin-right: 0.5rem;
 }
 
+/* ✅ Only highlight invalid ingredient cards in red */
+.ingredient-card.invalid {
+  border: 2px solid #e53935;
+  background-color: #fff0f0;
+}
+
+/* ✅ Use default styling for everything else — no green needed */
+
 .quantity-box {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.25rem;
 }
@@ -148,13 +157,38 @@
   color: #374151;
 }
 
+/* === ✅ UPDATED unit dropdown styling === */
+.unit-dropdown {
+  height: 36px;
+  padding: 0 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: #1f2937;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* === ⚠️ Warning Message === */
+.unit-warning {
+  color: #dc2626;
+  font-weight: 500;
+  background-color: #fef2f2;
+  padding: 0.75rem 1rem;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
 .confirm-buttons {
   display: flex;
   justify-content: center;
 }
 
 .confirm-button {
-  background-color: #10b981;
+  background-color: #e5e7eb;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -229,7 +263,7 @@
 .modal-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 1.8rem; /* Adds bottom margin after the list */
+  margin: 0 0 1.8rem;
 }
 
 .modal-list li {

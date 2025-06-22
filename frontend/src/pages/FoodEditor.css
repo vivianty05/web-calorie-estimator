@@ -1,0 +1,308 @@
+.calculate-page {
+  padding: 2rem 1rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.centered-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.food-name-display {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #2563eb;
+}
+
+.food-input {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  text-align: center;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.ingredients-list {
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: #f9fafb;
+  margin-bottom: 1.5rem;
+}
+
+.ingredient-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ingredient-row:last-child {
+  border-bottom: none;
+}
+
+.ingredient-name {
+  flex: 2;
+  font-weight: 600;
+}
+
+.ingredient-quantity {
+  flex: 1.8;
+  text-align: center;
+  color: #374151;
+}
+
+.ingredient-calories {
+  flex: 1.2;
+  text-align: right;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.total-calories {
+  font-size: 1.25rem;
+  text-align: right;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: #1e40af;
+}
+
+.editor-buttons {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.edit-button,
+.save-button,
+.done-button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.edit-button:hover,
+.save-button:hover,
+.done-button:hover {
+  background-color: #1e40af;
+}
+
+.floating-settings-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background-color: #2563eb;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+  z-index: 1000;
+  padding: 0;
+  line-height: 1;
+}
+
+.floating-settings-button:hover {
+  background-color: #1e40af;
+}
+
+.quantity-adjuster {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adjust-button {
+  background-color: #f1f5f9;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  color: #111827;
+  font-size: 1rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.adjust-button:hover {
+  background-color: #e2e8f0;
+}
+
+.quantity-input {
+  width: 60px;
+  height: 32px;
+  text-align: center;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: white;
+  color: #111827;
+  appearance: textfield;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.unit-label {
+  font-weight: 500;
+  color: #374151;
+  margin-left: 4px;
+}
+
+/* NEW: Dropdown for units */
+.unit-select {
+  font-size: 0.95rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: white;
+  color: #1f2937;
+  margin-left: 4px;
+  max-width: 100px;
+}
+
+/* NEW: Error banner */
+.unit-error-banner {
+  background-color: #fef3c7;
+  color: #92400e;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid #fde68a;
+}
+
+/* Modal styles (unchanged) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  font-family: inherit;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.modal p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #374151;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.cancel-button {
+  background-color: #e5e7eb;
+  color: #111827;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.cancel-button:hover {
+  background-color: #d1d5db;
+}
+
+.confirm-button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.confirm-button:hover {
+  background-color: #059669;
+}
