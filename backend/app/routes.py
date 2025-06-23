@@ -174,7 +174,10 @@ def delete_entry(
     return {"message": "Food record deleted"}
 
 @router.post("/detect-ingredients/")
-async def detect_ingredients_from_image(file:UploadFile = File(...)):
+async def detect_ingredients_from_image(
+    db: db_dependency,
+    food_entry_id: int = Form(...),
+    file:UploadFile = File(...)):
     try:
         timestamp = int(time.time())
         extension = file.filename.split(".")[-1]
@@ -186,11 +189,26 @@ async def detect_ingredients_from_image(file:UploadFile = File(...)):
         with open(image_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
+        db_food = db.query(models.FoodEntry).filter(models.FoodEntry.id == food_entry_id).first()
+        if not db_food:
+            raise HTTPException(status_code=404, detail="Food entry not found")
+        
         detected = detect_ingredients(image_path, save_result=True)
+
+        debug_path = f"images/debug/{filename}"
+
+        db_food.detected_image_path = debug_path
+
+        db.commit()
+        db.refresh(db_food)
 
         os.remove(image_path)
 
-        return {"detected_ingredients": detected}
+        return {
+            "message": "Detection completed",
+            "food_entry_id": db_food.id,
+            "detected_ingredients": detected,
+            "detected_imaged_path": db_food.detected_image_path}
     
     except Exception as e:
         print("Detection failed:", e)

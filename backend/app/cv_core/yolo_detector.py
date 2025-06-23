@@ -13,7 +13,7 @@ def detect_ingredients(imagepath: str, save_result=False):
         save_dir = "images/debug"
         os.makedirs(save_dir, exist_ok=True)
         results[0].save(filename=os.path.join(save_dir, os.path.basename(imagepath)))
-        print(f"[DEBUG] Saved YOLO image result to {save_dir}/{os.path.basename(imagepath)}")
+        print(f"Debug: Saved YOLO image result to {save_dir}/{os.path.basename(imagepath)}")
 
     label_counts = defaultdict(int)         # keeps track of counts per label
     for result in results:

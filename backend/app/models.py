@@ -12,6 +12,7 @@ class FoodEntry(Base):      # Creating the first table in our database
     total_calories = Column(Integer, nullable=True)
     image_path = Column(String, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)   # If no value given, automatically use the current UTC date and time
+    detected_image_path = Column(String, nullable=True)
 
     ingredients = relationship("Ingredient", back_populates="food")     
     # Establishes a one-to-many relationship between FoodEntry and Ingredient.
