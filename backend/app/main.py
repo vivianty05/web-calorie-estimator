@@ -40,8 +40,11 @@ def adding_predefined_unit_list():
     default_units = {
         "g": "grams",
         "ml": "milliliters",
-        "tbsp":"tablespoon",
-        "tsp":"teaspoon"
+        "tbsp": "tablespoon",
+        "tsp": "teaspoon",
+        "cup": "cups",
+        "oz": "ounces",
+        "lbs": "pounds"
     }
 
     for name, description in default_units.items():
