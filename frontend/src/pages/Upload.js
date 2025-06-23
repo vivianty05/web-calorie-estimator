@@ -2,8 +2,6 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Upload.css";
 
-// ✅ Use backend URL from .env file
-// const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const BASE_URL = "http://127.0.0.1:8000";
 
 const Upload = () => {
@@ -42,8 +40,8 @@ const Upload = () => {
       formData.append("file", file);
 
       try {
+        // Step 1: Upload image to /upload-image/
         const response = await fetch(`${BASE_URL}/upload-image/`, {
-        // const response = await fetch(`https://127.0.0.1:8000/upload-image/`, {
           method: "POST",
           body: formData,
         });
@@ -55,6 +53,23 @@ const Upload = () => {
         }
 
         const data = await response.json();
+
+        // Step 2: Detect ingredients using /detect-ingredients/
+        const detectionForm = new FormData();
+        detectionForm.append("file", file);
+
+        const detectionResponse = await fetch(`${BASE_URL}/detect-ingredients/`, {
+          method: "POST",
+          body: detectionForm,
+        });
+
+        if (!detectionResponse.ok) {
+          throw new Error("Detection failed");
+        }
+
+        const detectionData = await detectionResponse.json();
+        const detectedIngredients = detectionData.detected_ingredients;
+
         setStatus("done");
 
         setTimeout(() => {
@@ -63,14 +78,14 @@ const Upload = () => {
               foodName: data.food_name,
               image: base64,
               foodEntryId: data.food_entry_id,
-              // totalCalories: Optional[int]
+              detectedIngredients,
             },
           });
         }, 1500);
       } catch (error) {
-        console.error("❌ Upload error:", error);
+        console.error("❌ Upload or detection error:", error);
         setStatus("idle");
-        alert("Upload failed. Please try again.");
+        alert("Upload or detection failed. Please try again.");
       }
     };
 

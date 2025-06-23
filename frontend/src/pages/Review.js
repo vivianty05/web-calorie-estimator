@@ -7,41 +7,29 @@ const BASE_URL = "http://127.0.0.1:8000";
 const Review = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { foodEntryId, foodName: initFoodName, image } = location.state || {};
+  const { foodEntryId, foodName: initFoodName, image, detectedIngredients } = location.state || {};
 
   const [foodName, setFoodName] = useState(initFoodName || "");
-  const [imagePath] = useState(image); // base64 image preview
-  const imageUrl = imagePath ? imagePath : null;
-
+  const imageUrl = image ?? null;
   const detectionTime = new Date().toLocaleString();
-
-  const [detectedItems, setDetectedItems] = useState([
-    { name: "Onion", confidence: 98, count: 70, unit: "unit", caloriesPerUnit: 40 },
-    { name: "Salt", confidence: 95, count: 5, unit: "unit", caloriesPerUnit: 0 },
-    { name: "Egg", confidence: 95, count: 100, unit: "unit", caloriesPerUnit: 70 },
-    { name: "Baking Powder", confidence: 95, count: 90, unit: "unit", caloriesPerUnit: 2 },
-    { name: "AP Flour", confidence: 86, count: 80, unit: "unit", caloriesPerUnit: 3.64 }
-  ]);
 
   const [unitMap, setUnitMap] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [detectedItems, setDetectedItems] = useState([]);
 
   useEffect(() => {
     const fetchUnits = async () => {
       try {
         const res = await fetch(`${BASE_URL}/get-units/`);
         const data = await res.json();
-
         const map = {};
-        data.forEach(unit => {
+        data.forEach((unit) => {
           map[unit.name] = {
             id: unit.id,
-            description: unit.description
+            description: unit.description,
           };
         });
-
-        console.log("✅ Loaded unitMap:", map);
         setUnitMap(map);
       } catch (err) {
         console.error("❌ Failed to fetch units:", err);
@@ -50,6 +38,18 @@ const Review = () => {
 
     fetchUnits();
   }, []);
+
+  useEffect(() => {
+    if (detectedIngredients) {
+      const formatted = detectedIngredients.map((item) => ({
+        name: item.name,
+        count: item.quantity,
+        unit: "unit",
+        unit_id: null,
+      }));
+      setDetectedItems(formatted);
+    }
+  }, [detectedIngredients]);
 
   const handleChange = (index, value) => {
     if (/^\d*\.?\d*$/.test(value)) {
@@ -80,7 +80,7 @@ const Review = () => {
   };
 
   const handleConfirmClick = () => {
-    const hasUnconfigured = detectedItems.some(item => item.unit === "unit");
+    const hasUnconfigured = detectedItems.some((item) => item.unit === "unit");
     if (hasUnconfigured) {
       setShowWarning(true);
       return;
@@ -95,58 +95,48 @@ const Review = () => {
     const payload = {
       id: foodEntryId,
       food_name: foodName,
-      ingredients: detectedItems.map(item => ({
+      ingredients: detectedItems.map((item) => ({
         name: item.name,
         quantity: parseFloat(item.count),
         unit: item.unit,
-        unit_id: unitMap[item.unit]?.id
-      }))
+        unit_id: unitMap[item.unit]?.id,
+      })),
     };
 
     try {
       const response = await fetch(`${BASE_URL}/submit-review/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("❌ Backend error:", errorText);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("❌ Backend error:", errorText);
 
-      // Try parsing JSON error
-      try {
-        const errorJson = JSON.parse(errorText);
-        if (
-          errorJson.detail &&
-          errorJson.detail.includes("is not available for")
-        ) {
-          alert("⚠️ Please select an appropriate unit for the ingredients.\n\n" + errorJson.detail);
-        } else {
+        try {
+          const errorJson = JSON.parse(errorText);
+          if (errorJson.detail?.includes("is not available for")) {
+            alert("⚠️ " + errorJson.detail);
+          } else {
+            alert("Failed to save ingredients. Please try again.");
+          }
+        } catch {
           alert("Failed to save ingredients. Please try again.");
         }
-      } catch (parseError) {
-        alert("Failed to save ingredients. Please try again.");
+        return;
       }
-      return;
-    }
 
       const result = await response.json();
-      console.log("✅ Submission success:", result);
 
       navigate("/calculate", {
         state: {
           ingredients: detectedItems,
           foodName: result.food_name,
           foodEntryId: result.food_entry_id,
-          // foodEntryId: result.food_entry_id,
-          // foodEntryId: result.id,
-          totalCalories: result.total_calories
-        }
+          totalCalories: result.total_calories,
+        },
       });
-
     } catch (err) {
       console.error("❌ Submit error:", err);
       alert("Error connecting to backend.");
@@ -181,7 +171,6 @@ const Review = () => {
               <div className="ingredient-check">✅</div>
               <div className="ingredient-info">
                 <strong>{item.name}</strong>
-                <p>Confidence: {item.confidence}%</p>
               </div>
               <div className="ingredient-control">
                 <label>Count:</label>
@@ -199,7 +188,9 @@ const Review = () => {
                     value={item.unit}
                     onChange={(e) => handleUnitChange(index, e.target.value)}
                   >
-                    <option value="unit" disabled>unit</option>
+                    <option value="unit" disabled>
+                      unit
+                    </option>
                     {Object.entries(unitMap).map(([key, val]) => (
                       <option key={key} value={key}>
                         {val.description} ({key})
@@ -213,7 +204,9 @@ const Review = () => {
         </div>
 
         {showWarning && (
-          <p className="unit-warning">⚠️ Please select a unit for the ingredients before continuing.</p>
+          <p className="unit-warning">
+            ⚠️ Please select a unit for the ingredients before continuing.
+          </p>
         )}
 
         <div className="confirm-buttons">
@@ -228,7 +221,12 @@ const Review = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h3>Ingredient List and Quantities</h3>
-              <button className="close-button" onClick={() => setShowModal(false)}>×</button>
+              <button
+                className="close-button"
+                onClick={() => setShowModal(false)}
+              >
+                ×
+              </button>
             </div>
 
             <div className="modal-divider" />
@@ -249,8 +247,18 @@ const Review = () => {
             </ul>
 
             <div className="modal-buttons">
-              <button className="cancel-button" onClick={() => setShowModal(false)}>Cancel</button>
-              <button className="confirm-button" onClick={handleCalculateClick}>Calculate Calories</button>
+              <button
+                className="cancel-button"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="confirm-button"
+                onClick={handleCalculateClick}
+              >
+                Calculate Calories
+              </button>
             </div>
           </div>
         </div>
