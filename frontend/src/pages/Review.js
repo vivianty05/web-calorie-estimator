@@ -7,10 +7,17 @@ const BASE_URL = "http://127.0.0.1:8000";
 const Review = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { foodEntryId, foodName: initFoodName, image, detectedIngredients } = location.state || {};
+  const {
+    foodEntryId,
+    foodName: initFoodName,
+    detectedIngredients,
+    detectedImagePath, // 👈 debug image path
+  } = location.state || {};
 
   const [foodName, setFoodName] = useState(initFoodName || "");
-  const imageUrl = image ?? null;
+  const debugImageUrl = detectedImagePath
+    ? `${BASE_URL}/${detectedImagePath}`.replace(/\/{2,}/g, "/").replace(":/", "://")
+    : null;
   const detectionTime = new Date().toLocaleString();
 
   const [unitMap, setUnitMap] = useState({});
@@ -66,7 +73,6 @@ const Review = () => {
     updated[index].unit_id = unitMap[newUnit]?.id || null;
     setDetectedItems(updated);
 
-    // Clear error for this item if it exists
     const name = updated[index].name;
     if (unitErrors[name]) {
       setUnitErrors((prev) => {
@@ -172,8 +178,8 @@ const Review = () => {
         <p className="detection-time">Detection Result • {detectionTime}</p>
 
         <div className="review-box">
-          {imageUrl && (
-            <img src={imageUrl} alt="Uploaded ingredients" className="detected-image" />
+          {debugImageUrl && (
+            <img src={debugImageUrl} alt="Detection result" className="detected-image" />
           )}
           <p className="review-message">
             Detected {detectedItems.length} ingredients. Please review and adjust the quantities below.

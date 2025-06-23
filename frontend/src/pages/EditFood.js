@@ -51,7 +51,7 @@ const EditFood = () => {
           foodName: data.food_name,
           ingredients: transformedIngredients,
           totalCalories: data.total_calories,
-          imagePath: data.image_path,
+          imagePath: data.detected_image_path,
         });
       } catch (error) {
         console.error("❌ Error loading food data:", error);

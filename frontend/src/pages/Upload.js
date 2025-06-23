@@ -57,6 +57,7 @@ const Upload = () => {
         // Step 2: Detect ingredients using /detect-ingredients/
         const detectionForm = new FormData();
         detectionForm.append("file", file);
+        detectionForm.append("food_entry_id", data.food_entry_id); // 👈 Added this
 
         const detectionResponse = await fetch(`${BASE_URL}/detect-ingredients/`, {
           method: "POST",
@@ -69,6 +70,7 @@ const Upload = () => {
 
         const detectionData = await detectionResponse.json();
         const detectedIngredients = detectionData.detected_ingredients;
+        const detectedImagePath = detectionData.detected_imaged_path; // 👈 Extract this
 
         setStatus("done");
 
@@ -79,6 +81,7 @@ const Upload = () => {
               image: base64,
               foodEntryId: data.food_entry_id,
               detectedIngredients,
+              detectedImagePath, // 👈 Pass it to Review page
             },
           });
         }, 1500);
