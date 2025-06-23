@@ -108,9 +108,14 @@
 }
 
 /* ✅ Only highlight invalid ingredient cards in red */
-.ingredient-card.invalid {
+/* .ingredient-card.invalid {
   border: 2px solid #e53935;
   background-color: #fff0f0;
+} */
+
+.ingredient-card.error {
+  border: 2px solid #dc2626;
+  background-color: #ffe4e4;
 }
 
 /* ✅ Use default styling for everything else — no green needed */
@@ -168,6 +173,18 @@
   color: #1f2937;
   cursor: pointer;
   vertical-align: middle;
+}
+
+/* === ⚠️ Warning Message === */
+.unit-dropdown.error {
+  border-color: #dc2626;
+  background-color: #fff5f5;
+}
+
+.unit-error-msg {
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-top: 4px;
 }
 
 /* === ⚠️ Warning Message === */

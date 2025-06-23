@@ -16,6 +16,7 @@ const Review = () => {
   const [unitMap, setUnitMap] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [unitErrors, setUnitErrors] = useState({});
   const [detectedItems, setDetectedItems] = useState([]);
 
   useEffect(() => {
@@ -64,6 +65,16 @@ const Review = () => {
     updated[index].unit = newUnit;
     updated[index].unit_id = unitMap[newUnit]?.id || null;
     setDetectedItems(updated);
+
+    // Clear error for this item if it exists
+    const name = updated[index].name;
+    if (unitErrors[name]) {
+      setUnitErrors((prev) => {
+        const copy = { ...prev };
+        delete copy[name];
+        return copy;
+      });
+    }
   };
 
   const increment = (index) => {
@@ -116,14 +127,24 @@ const Review = () => {
 
         try {
           const errorJson = JSON.parse(errorText);
-          if (errorJson.detail?.includes("is not available for")) {
-            alert("⚠️ " + errorJson.detail);
-          } else {
-            alert("Failed to save ingredients. Please try again.");
+          if (errorJson.detail?.includes("not available for")) {
+            const match = errorJson.detail.match(/'(.+)' not available for '(.+)'/);
+            if (match) {
+              const [, invalidUnit, ingredientName] = match;
+              setUnitErrors({ [ingredientName]: invalidUnit });
+
+              const el = document.getElementById(`ingredient-${ingredientName}`);
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+              return;
+            }
           }
+
+          alert("Failed to save ingredients. Please try again.");
         } catch {
           alert("Failed to save ingredients. Please try again.");
         }
+
         return;
       }
 
@@ -152,11 +173,7 @@ const Review = () => {
 
         <div className="review-box">
           {imageUrl && (
-            <img
-              src={imageUrl}
-              alt="Uploaded ingredients"
-              className="detected-image"
-            />
+            <img src={imageUrl} alt="Uploaded ingredients" className="detected-image" />
           )}
           <p className="review-message">
             Detected {detectedItems.length} ingredients. Please review and adjust the quantities below.
@@ -167,10 +184,19 @@ const Review = () => {
 
         <div className="ingredient-list">
           {detectedItems.map((item, index) => (
-            <div key={index} className="ingredient-card">
+            <div
+              key={index}
+              id={`ingredient-${item.name}`}
+              className={`ingredient-card ${unitErrors[item.name] ? "error" : ""}`}
+            >
               <div className="ingredient-check">✅</div>
               <div className="ingredient-info">
                 <strong>{item.name}</strong>
+                {unitErrors[item.name] && (
+                  <p className="unit-error-msg">
+                    ❗️The unit "{unitErrors[item.name]}" is not valid for this ingredient.
+                  </p>
+                )}
               </div>
               <div className="ingredient-control">
                 <label>Count:</label>
@@ -184,13 +210,11 @@ const Review = () => {
                   <button onClick={() => increment(index)}>+</button>
 
                   <select
-                    className="unit-dropdown"
+                    className={`unit-dropdown ${unitErrors[item.name] ? "error" : ""}`}
                     value={item.unit}
                     onChange={(e) => handleUnitChange(index, e.target.value)}
                   >
-                    <option value="unit" disabled>
-                      unit
-                    </option>
+                    <option value="unit" disabled>unit</option>
                     {Object.entries(unitMap).map(([key, val]) => (
                       <option key={key} value={key}>
                         {val.description} ({key})
@@ -221,12 +245,7 @@ const Review = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h3>Ingredient List and Quantities</h3>
-              <button
-                className="close-button"
-                onClick={() => setShowModal(false)}
-              >
-                ×
-              </button>
+              <button className="close-button" onClick={() => setShowModal(false)}>×</button>
             </div>
 
             <div className="modal-divider" />
@@ -247,16 +266,8 @@ const Review = () => {
             </ul>
 
             <div className="modal-buttons">
-              <button
-                className="cancel-button"
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="confirm-button"
-                onClick={handleCalculateClick}
-              >
+              <button className="cancel-button" onClick={() => setShowModal(false)}>Cancel</button>
+              <button className="confirm-button" onClick={handleCalculateClick}>
                 Calculate Calories
               </button>
             </div>
