@@ -36,10 +36,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.5rem;
-  padding-bottom: 4rem; /* space for floating button */
+  padding-bottom: 4rem;
 }
 
 .history-card {
+  position: relative;
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -49,10 +50,16 @@
   display: flex;
   flex-direction: column;
   user-select: none;
+  border: 2px solid transparent;
 }
 
 .history-card:hover {
   transform: translateY(-5px);
+}
+
+.history-card.selected {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .history-image {
@@ -85,26 +92,140 @@
   grid-column: 1 / -1;
 }
 
-/* Floating add button bottom right */
-.floating-add-button {
+/* Floating edit button and dropdown */
+.floating-edit-container {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.floating-edit-button {
   background-color: #2563eb;
   color: white;
-  font-size: 2.5rem;
-  line-height: 56px;
+  font-size: 1.5rem;
   border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
   transition: background-color 0.2s ease;
   user-select: none;
+}
+
+.floating-edit-button:hover {
+  background-color: #1e40af;
+}
+
+.edit-options {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 160px;
+  overflow: hidden;
+}
+
+.edit-options button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #1e40af;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.edit-options button:hover {
+  background-color: #e0e7ff;
+}
+
+.edit-options button + button {
+  border-top: 1px solid #e5e7eb;
+}
+
+.option-icon {
+  width: 1.5rem;
+  text-align: center;
+}
+
+.option-text {
+  flex: 1;
+}
+
+/* Confirm Delete + Cancel Buttons */
+.delete-action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
   z-index: 1000;
 }
 
-.floating-add-button:hover {
-  background-color: #1e40af;
+.delete-confirm-button,
+.cancel-delete-button {
+  padding: 0.6rem 1.25rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+.delete-confirm-button {
+  background-color: #ef4444;
+  color: white;
+}
+
+.delete-confirm-button:hover {
+  background-color: #dc2626;
+}
+
+.cancel-delete-button {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.cancel-delete-button:hover {
+  background-color: #d1d5db;
+}
+
+/* Circle check button in top-right */
+.check-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #2563eb;
+  background-color: white;
+  color: white;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.check-button.checked {
+  background-color: #2563eb;
+  color: white;
 }
