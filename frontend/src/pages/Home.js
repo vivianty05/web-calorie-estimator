@@ -114,8 +114,7 @@ const Home = () => {
                     </button>
                   )}
                   <img
-                    // src={`${BASE_URL}/${item.image_path}`}
-                    src={item.image_path}
+                    src={`${BASE_URL}/${item.image_path}`}
                     alt={item.food_name}
                     className="history-image"
                   />
