@@ -1,63 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Calculate.css";
+import FoodEditor from "./FoodEditor";
+
+const BASE_URL = "http://127.0.0.1:8000";
 
 const Calculate = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ Prefer route state, fallback to localStorage
-  const foodName =
-    location.state?.foodName || localStorage.getItem("foodName") || "Unnamed Dish";
+  const foodEntryId = location.state?.foodEntryId;
 
-  // ✅ Prefer ingredients from route state
-  const ingredients = location.state?.ingredients || [
-    { name: "Onion", count: 7, unit: "pieces", caloriesPerUnit: 40 },
-    { name: "Salt", count: 1000, unit: "grams", caloriesPerUnit: 0 },
-    { name: "Egg", count: 3, unit: "pieces", caloriesPerUnit: 70 },
-    { name: "Baking Powder", count: 90, unit: "grams", caloriesPerUnit: 2 },
-    { name: "AP Flour", count: 1000, unit: "grams", caloriesPerUnit: 3.64 },
-  ];
+  const [foodName, setFoodName] = useState("Unnamed Dish");
+  const [ingredients, setIngredients] = useState([]);
+  const [foodImage, setFoodImage] = useState("");
+  const [totalCalories, setTotalCalories] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const ingredientsWithCalories = ingredients.map(item => ({
-    ...item,
-    calories: (item.count || 0) * item.caloriesPerUnit,
-  }));
+  useEffect(() => {
+    const fetchFoodEntry = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/food-entries/${foodEntryId}`);
+        const data = await res.json();
 
-  const totalCalories = ingredientsWithCalories.reduce(
-    (sum, item) => sum + item.calories,
-    0
-  );
+        setFoodName(data.food_name);
+        setTotalCalories(data.total_calories);
+        setFoodImage(data.image_path);
+        setIngredients(
+          data.ingredients.map((i) => ({
+            name: i.name,
+            count: i.quantity,
+            unit: i.unit.name,
+            unit_id: i.unit.id,
+            caloriesPerUnit: i.quantity > 0 ? (i.calories / i.quantity) : 0,
+          }))
+        );
+      } catch (err) {
+        console.error("Failed to fetch food entry:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return (
+    if (foodEntryId) {
+      console.log("Fetching food entry with ID:", foodEntryId);
+      fetchFoodEntry();
+    }
+    else {
+      console.error("Missing foodEntryId from route state");
+    }
+  }, [foodEntryId]);
+
+  return loading ? (
     <div className="calculate-page">
       <div className="centered-container">
         <h2>Part 3: Calorie Calculation</h2>
-        <h3 className="food-name-display">{foodName}</h3>
-
-        <div className="ingredients-list">
-          {ingredientsWithCalories.map((item, index) => (
-            <div key={index} className="ingredient-row">
-              <span className="ingredient-name">{item.name}</span>
-              <span className="ingredient-quantity">
-                {item.count} {item.unit}
-              </span>
-              <span className="ingredient-calories">
-                {item.calories.toFixed(2)} kcal
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="total-calories">
-          <strong>Total Calories:</strong> {totalCalories.toFixed(2)} kcal
-        </div>
-
-        <button className="done-button" onClick={() => navigate("/")}>
-          Done
-        </button>
+        <p>Loading...</p>
       </div>
     </div>
+  ) : (
+    <FoodEditor
+      editable={false}
+      initialFoodName={foodName}
+      initialIngredients={ingredients}
+      imagePath={foodImage}
+      totalCalories={totalCalories}
+      onCancel={() => navigate("/")}
+      buttonLabel="Done"
+    />
   );
 };
 

@@ -16,11 +16,11 @@ const Review = () => {
   const detectionTime = new Date().toLocaleString();
 
   const [detectedItems, setDetectedItems] = useState([
-    { name: "Onion", confidence: 98, count: 7, unit: "unit", caloriesPerUnit: 40 },
-    { name: "Salt", confidence: 95, count: 1000, unit: "unit", caloriesPerUnit: 0 },
-    { name: "Egg", confidence: 95, count: 3, unit: "unit", caloriesPerUnit: 70 },
+    { name: "Onion", confidence: 98, count: 70, unit: "unit", caloriesPerUnit: 40 },
+    { name: "Salt", confidence: 95, count: 5, unit: "unit", caloriesPerUnit: 0 },
+    { name: "Egg", confidence: 95, count: 100, unit: "unit", caloriesPerUnit: 70 },
     { name: "Baking Powder", confidence: 95, count: 90, unit: "unit", caloriesPerUnit: 2 },
-    { name: "AP Flour", confidence: 86, count: 1000, unit: "unit", caloriesPerUnit: 3.64 }
+    { name: "AP Flour", confidence: 86, count: 80, unit: "unit", caloriesPerUnit: 3.64 }
   ]);
 
   const [unitMap, setUnitMap] = useState({});
@@ -140,7 +140,9 @@ const Review = () => {
         state: {
           ingredients: detectedItems,
           foodName: result.food_name,
-          foodEntryId: result.food_id,
+          foodEntryId: result.food_entry_id,
+          // foodEntryId: result.food_entry_id,
+          // foodEntryId: result.id,
           totalCalories: result.total_calories
         }
       });

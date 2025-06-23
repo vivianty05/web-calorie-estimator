@@ -60,8 +60,7 @@ const Upload = () => {
         setTimeout(() => {
           navigate("/review", {
             state: {
-              foodName: data["food name"],
-              // foodName: data."food_name",
+              foodName: data.food_name,
               image: base64,
               foodEntryId: data.food_entry_id,
               // totalCalories: Optional[int]

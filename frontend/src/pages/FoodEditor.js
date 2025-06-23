@@ -5,8 +5,8 @@ const BASE_URL = "http://127.0.0.1:8000";
 
 const FoodEditor = ({
   editable = false,
-  initialFoodName,
-  initialIngredients,
+  initialFoodName = "",
+  initialIngredients = [],
   imagePath,                      // ✅ Accept image path
   availableUnits = [],              // ✅ added
   onSubmit,
