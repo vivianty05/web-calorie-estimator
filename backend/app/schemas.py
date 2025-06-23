@@ -39,6 +39,7 @@ class FoodEntryResponse(FoodEntryReview):     # Model for food output (to show h
     total_calories: int
     timestamp: datetime
     ingredients: List[IngredientResponse]
+    detected_image_path: Optional[str]
 
     class Config:
         from_attributes = True

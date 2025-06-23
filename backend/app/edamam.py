@@ -28,7 +28,7 @@ async def get_calories_per_ingredient(ingredient_name: str, unit: str, quantity:
         parser_data = parser_response.json()                                  # turns the reply into a Python dictionary
 
     # 🔍 DEBUG: Show what the parser returned
-    print("🟢 PARSER RESPONSE:")
+    print("PARSER RESPONSE:")
     print(parser_data)
 
     try: 
@@ -58,7 +58,7 @@ async def get_calories_per_ingredient(ingredient_name: str, unit: str, quantity:
         }
 
         # 🔍 DEBUG: Show what we’re sending to the nutrients endpoint
-        print("🟡 NUTRIENT REQUEST BODY:")
+        print("NUTRIENT REQUEST BODY:")
         print(body)
 
         async with httpx.AsyncClient() as client:
@@ -66,7 +66,7 @@ async def get_calories_per_ingredient(ingredient_name: str, unit: str, quantity:
             nutrient_data = nutrient_response.json()
 
         # 🔍 DEBUG: Show what the nutrient API returned
-        print("🟣 NUTRIENT RESPONSE:")
+        print("NUTRIENT RESPONSE:")
         print(nutrient_data)
 
         return nutrient_data["calories"]
