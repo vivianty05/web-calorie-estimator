@@ -66,7 +66,8 @@ async def submit_food(
         existing_ingredients = db.query(models.Ingredient).filter(models.Ingredient.food_id == db_food.id).all()
         if existing_ingredients:
             db.query(models.Ingredient).filter(models.Ingredient.food_id == db_food.id).delete()
-
+        
+        ingredient_data = []
         total = 0
 
         for ingredient in foodentry.ingredients:
@@ -77,13 +78,19 @@ async def submit_food(
                 quantity=ingredient.quantity
             )
             total += kcal
+            ingredient_data.append({
+                "name": ingredient.name,
+                "quantity": ingredient.quantity,
+                "unit_id": ingredient.unit_id,
+                "calories": round(kcal)
+            })
         
-        for ingredient in foodentry.ingredients:
+        for data in ingredient_data:
             db_ingredient = models.Ingredient(
-                name=ingredient.name, 
-                quantity=ingredient.quantity, 
-                unit_id=ingredient.unit_id, 
-                calories=round(kcal),
+                name=data["name"], 
+                quantity=data["quantity"], 
+                unit_id=data["unit_id"], 
+                calories=data["calories"],
                 food_id=db_food.id
             )
             db.add(db_ingredient)
