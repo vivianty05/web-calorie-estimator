@@ -28,7 +28,7 @@ app.add_middleware(
 )
 
 # Mount /images/uploaded
-# app.mount("/images/uploaded", StaticFiles(directory="images/uploaded"), name="uploaded")
+app.mount("/images/uploaded", StaticFiles(directory="images/uploaded"), name="uploaded")
 
 # Mount /images/debug
 app.mount("/images/debug", StaticFiles(directory="images/debug"), name="debug")
