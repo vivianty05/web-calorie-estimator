@@ -27,7 +27,7 @@ app.add_middleware(
     allow_headers=["*"]               # Allow all custom headers
 )
 
-app.mount("/images", StaticFiles(directory="images"), name="images")
+app.mount("/images/uploaded", StaticFiles(directory="images"), name="images")
 
 # Seeding logic runs once at startup
 @app.on_event("startup")
