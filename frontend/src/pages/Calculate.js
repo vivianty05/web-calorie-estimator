@@ -24,7 +24,7 @@ const Calculate = () => {
 
         setFoodName(data.food_name);
         setTotalCalories(data.total_calories);
-        setFoodImage(`${BASE_URL}/${data.detected_image_path}`);
+        setFoodImage(data.detected_image_path);
         setIngredients(
           data.ingredients.map((i) => ({
             name: i.name,
