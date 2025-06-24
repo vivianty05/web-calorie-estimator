@@ -44,7 +44,8 @@ def adding_predefined_unit_list():
         "tsp": "teaspoon",
         "cup": "cups",
         "oz": "ounces",
-        "lbs": "pounds"
+        "lbs": "pounds",
+        "pcs": "pieces"
     }
 
     for name, description in default_units.items():

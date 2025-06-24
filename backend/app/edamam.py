@@ -15,7 +15,8 @@ unit_map = {
     "tsp": "Teaspoon",
     "cup": "Cup",
     "oz": "Ounce",
-    "lbs": "Pound"
+    "lbs": "Pound",
+    "pcs": "Piece"
 }
 
 async def get_calories_per_ingredient(ingredient_name: str, unit: str, quantity: float) -> float:      # Takes the food name as a string and return a float value for the calories
