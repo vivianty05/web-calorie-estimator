@@ -39,6 +39,24 @@ h2 {
   font-weight: 600;
 }
 
+/* ✅ Image container styling */
+.image-wrapper {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-food-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
 .ingredients-list {
   border: 1px solid #d1d5db;
   border-radius: 12px;
@@ -110,6 +128,7 @@ h2 {
   background-color: #1e40af;
 }
 
+/* ✅ Updated: Floating edit button with SVG icon */
 .floating-settings-button {
   position: fixed;
   bottom: 24px;
@@ -118,8 +137,6 @@ h2 {
   height: 56px;
   background-color: #2563eb;
   color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -137,6 +154,11 @@ h2 {
   background-color: #1e40af;
 }
 
+.floating-settings-button svg {
+  fill: white;
+}
+
+/* Quantity control styles */
 .quantity-adjuster {
   display: flex;
   align-items: center;
@@ -186,7 +208,6 @@ h2 {
   margin-left: 4px;
 }
 
-/* NEW: Dropdown for units */
 .unit-select {
   font-size: 0.95rem;
   padding: 0.3rem 0.5rem;
@@ -198,7 +219,6 @@ h2 {
   max-width: 100px;
 }
 
-/* NEW: Error banner */
 .unit-error-banner {
   background-color: #fef3c7;
   color: #92400e;
@@ -210,7 +230,7 @@ h2 {
   border: 1px solid #fde68a;
 }
 
-/* Modal styles (unchanged) */
+/* Modal styles */
 .modal-overlay {
   position: fixed;
   top: 0;

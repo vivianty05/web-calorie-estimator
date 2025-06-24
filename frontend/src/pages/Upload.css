@@ -56,26 +56,60 @@
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #d1d5db;
+  color: #111827 !important;
+  font-weight: 400 !important;
+  background-color: white;
 }
 
+/* Placeholder styling */
+.food-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Autofill override for WebKit browsers */
+input.food-input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-weight: 400 !important;
+}
+
+/* Focus styling */
+.food-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  color: #111827 !important;
+  font-weight: 400 !important;
+}
+
+/* Enhanced "Enter" button */
 .food-submit-button {
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: #3b82f6;
   color: white;
+  font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .food-submit-button:hover {
   background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.food-submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
 }
 
 /* Disabled state */
 .food-input:disabled {
   background-color: #f9fafb;
-  color: #9ca3af;
+  color: #9ca3af !important;
   cursor: not-allowed;
 }
 

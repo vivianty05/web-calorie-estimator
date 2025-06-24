@@ -40,7 +40,6 @@ const Upload = () => {
       formData.append("file", file);
 
       try {
-        // Step 1: Upload image to /upload-image/
         const response = await fetch(`${BASE_URL}/upload-image/`, {
           method: "POST",
           body: formData,
@@ -54,10 +53,9 @@ const Upload = () => {
 
         const data = await response.json();
 
-        // Step 2: Detect ingredients using /detect-ingredients/
         const detectionForm = new FormData();
         detectionForm.append("file", file);
-        detectionForm.append("food_entry_id", data.food_entry_id); // 👈 Added this
+        detectionForm.append("food_entry_id", data.food_entry_id);
 
         const detectionResponse = await fetch(`${BASE_URL}/detect-ingredients/`, {
           method: "POST",
@@ -70,7 +68,7 @@ const Upload = () => {
 
         const detectionData = await detectionResponse.json();
         const detectedIngredients = detectionData.detected_ingredients;
-        const detectedImagePath = detectionData.detected_imaged_path; // 👈 Extract this
+        const detectedImagePath = detectionData.detected_imaged_path;
 
         setStatus("done");
 
@@ -81,7 +79,7 @@ const Upload = () => {
               image: base64,
               foodEntryId: data.food_entry_id,
               detectedIngredients,
-              detectedImagePath, // 👈 Pass it to Review page
+              detectedImagePath,
             },
           });
         }, 1500);
@@ -115,27 +113,30 @@ const Upload = () => {
       <div className="centered-container">
         <div className="food-input-group">
           <label className="food-prompt">What are you making?</label>
-          <div className="food-input-row">
-            <input
-              type="text"
-              className="food-input"
-              placeholder="Please enter the food you are making here."
-              value={foodName}
-              onChange={(e) => {
-                if (!submitted) setFoodName(e.target.value);
-              }}
-              disabled={submitted}
-            />
-            <button
-              className="food-submit-button"
-              onClick={() => {
-                if (foodName.trim()) setSubmitted(true);
-              }}
-              disabled={submitted}
-            >
-              Enter
-            </button>
-          </div>
+
+          {!submitted ? (
+            <div className="food-input-row">
+              <input
+                type="text"
+                className="food-input"
+                placeholder="Please enter the food you are making here."
+                value={foodName}
+                onChange={(e) => setFoodName(e.target.value)}
+              />
+              <button
+                className="food-submit-button"
+                onClick={() => {
+                  if (foodName.trim()) setSubmitted(true);
+                }}
+              >
+                Enter
+              </button>
+            </div>
+          ) : (
+            <h2 style={{ color: "#2563eb", fontWeight: "700", marginTop: "1rem" }}>
+              {foodName}
+            </h2>
+          )}
         </div>
       </div>
 
