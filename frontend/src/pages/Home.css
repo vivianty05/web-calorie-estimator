@@ -2,7 +2,7 @@
   max-width: 100%;
   padding: 0 1rem 4rem;
   box-sizing: border-box;
-  background-color: #f5f6fa;
+  background-color: #f3f4ed;
 }
 
 /* Reusable centering wrapper */
@@ -22,14 +22,14 @@
   padding: 0.75rem 1rem;
   font-size: 1rem;
   border-radius: 12px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #b7c7b1;
   outline-offset: 2px;
   transition: border-color 0.2s ease;
 }
 
 .search-input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+  border-color: #3b7f4e;
+  box-shadow: 0 0 8px rgba(59, 127, 78, 0.4);
 }
 
 .history-grid {
@@ -58,8 +58,8 @@
 }
 
 .history-card.selected {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+  border-color: #3b7f4e;
+  box-shadow: 0 0 0 3px rgba(59, 127, 78, 0.3);
 }
 
 .history-image {
@@ -76,13 +76,13 @@
 .history-info h3 {
   margin: 0 0 0.5rem;
   font-size: 1.1rem;
-  color: #1e40af;
+  color: #2f6840;
 }
 
 .history-info p {
   margin: 0;
   font-weight: 600;
-  color: #2563eb;
+  color: #3b7f4e;
 }
 
 .no-results {
@@ -105,7 +105,7 @@
 }
 
 .floating-edit-button {
-  background-color: #2563eb;
+  background-color: #3b7f4e;
   border: none;
   border-radius: 50%;
   width: 56px;
@@ -114,12 +114,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 4px 15px rgba(59, 127, 78, 0.5);
   transition: background-color 0.2s ease;
 }
 
 .floating-edit-button:hover {
-  background-color: #1e40af;
+  background-color: #2f6840;
 }
 
 .floating-edit-button svg {
@@ -131,7 +131,7 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #b7c7b1;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 160px;
@@ -143,7 +143,7 @@
   border: none;
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  color: #1e40af;
+  color: #2f6840;
   text-align: left;
   width: 100%;
   cursor: pointer;
@@ -154,11 +154,11 @@
 }
 
 .edit-options button:hover {
-  background-color: #e0e7ff;
+  background-color: #e4efe5;
 }
 
 .edit-options button + button {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #dde4da;
 }
 
 .option-icon {
@@ -186,28 +186,30 @@
   padding: 0.6rem 1.25rem;
   font-weight: 600;
   border: none;
-  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: background-color 0.2s ease;
 }
 
 .delete-confirm-button {
-  background-color: #ef4444;
+  background-color: #3b7f4e;
   color: white;
 }
 
 .delete-confirm-button:hover {
-  background-color: #dc2626;
+  background-color: #2f6840;
 }
 
 .cancel-delete-button {
-  background-color: #e5e7eb;
+  background-color: #dde4da;
   color: #1f2937;
 }
 
 .cancel-delete-button:hover {
-  background-color: #d1d5db;
+  background-color: #cbd5c4;
 }
 
 /* Circle check button in top-right */
@@ -218,7 +220,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  border: 2px solid #2563eb;
+  border: 2px solid #3b7f4e;
   background-color: white;
   color: white;
   font-size: 13px;
@@ -231,6 +233,6 @@
 }
 
 .check-button.checked {
-  background-color: #2563eb;
+  background-color: #3b7f4e;
   color: white;
 }

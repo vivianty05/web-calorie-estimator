@@ -1,7 +1,7 @@
 .calculate-page {
   padding: 2rem 1rem 4rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  background-color: #f5f6fa;
+  background-color: #f3f4ed;
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -24,7 +24,7 @@ h2 {
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: #2563eb;
+  color: #3b7f4e;
 }
 
 .food-input {
@@ -33,13 +33,13 @@ h2 {
   padding: 0.5rem;
   margin-bottom: 1.5rem;
   border-radius: 10px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #b5dcc0;
   text-align: center;
-  color: #2563eb;
+  color: #2f6840;
   font-weight: 600;
 }
 
-/* ✅ Image container styling */
+/* Image container styling */
 .image-wrapper {
   background-color: white;
   padding: 1rem;
@@ -92,7 +92,7 @@ h2 {
   flex: 1.2;
   text-align: right;
   font-weight: 600;
-  color: #2563eb;
+  color: #3b7f4e;
 }
 
 .total-calories {
@@ -100,7 +100,7 @@ h2 {
   text-align: right;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  color: #1e40af;
+  color: #2f6840;
 }
 
 .editor-buttons {
@@ -111,7 +111,7 @@ h2 {
 .edit-button,
 .save-button,
 .done-button {
-  background-color: #2563eb;
+  background-color: #3b7f4e;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -125,17 +125,17 @@ h2 {
 .edit-button:hover,
 .save-button:hover,
 .done-button:hover {
-  background-color: #1e40af;
+  background-color: #2f6840;
 }
 
-/* ✅ Updated: Floating edit button with SVG icon */
+/* Floating edit button with SVG icon */
 .floating-settings-button {
   position: fixed;
   bottom: 24px;
   right: 24px;
   width: 56px;
   height: 56px;
-  background-color: #2563eb;
+  background-color: #3b7f4e;
   color: white;
   border: none;
   border-radius: 50%;
@@ -151,7 +151,7 @@ h2 {
 }
 
 .floating-settings-button:hover {
-  background-color: #1e40af;
+  background-color: #2f6840;
 }
 
 .floating-settings-button svg {
@@ -212,7 +212,7 @@ h2 {
   font-size: 0.95rem;
   padding: 0.3rem 0.5rem;
   border-radius: 6px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #b5dcc0;
   background-color: white;
   color: #1f2937;
   margin-left: 4px;
@@ -303,8 +303,9 @@ h2 {
   background-color: #e5e7eb;
   color: #111827;
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
 }
@@ -317,8 +318,9 @@ h2 {
   background-color: #10b981;
   color: white;
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
 }
