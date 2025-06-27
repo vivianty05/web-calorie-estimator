@@ -16,7 +16,8 @@ app.include_router(router)      # register all routes from routes.py here
 # Defining the URL that can access this backend
 origins = [
     "http://localhost:3000",
-    "http://192.168.0.224:3000"
+    "http://192.168.0.224:3000",
+    "http://172.24.2.255:3000"
 ]
 
 app.add_middleware(

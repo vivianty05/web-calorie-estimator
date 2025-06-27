@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./FoodEditor.css";
 
-const BASE_URL = "http://127.0.0.1:8000";
+// const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "http://192.168.0.224:8000";
+// const BASE_URL = "http://172.24.2.255:8000";
 
 const FoodEditor = ({
   editable = false,

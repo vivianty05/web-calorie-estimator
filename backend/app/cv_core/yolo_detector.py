@@ -7,7 +7,7 @@ model_path = os.path.join(os.path.dirname(__file__), "model", "best.pt")        
 model = YOLO(model_path)
 
 def detect_ingredients(imagepath: str, save_result=False):
-    results = model(imagepath)
+    results = model(imagepath, conf=0.3)
     
     if save_result:
         save_dir = "images/debug"

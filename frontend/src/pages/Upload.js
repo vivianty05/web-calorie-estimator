@@ -2,7 +2,9 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Upload.css";
 
-const BASE_URL = "http://127.0.0.1:8000";
+// const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "http://192.168.0.224:8000";
+// const BASE_URL = "http://172.24.2.255:8000";
 
 const Upload = () => {
   const [foodName, setFoodName] = useState("");
@@ -133,7 +135,7 @@ const Upload = () => {
               </button>
             </div>
           ) : (
-            <h2 style={{ color: "#2563eb", fontWeight: "700", marginTop: "1rem" }}>
+            <h2 style={{ color: "#3b7f4e", fontWeight: "700", marginTop: "1rem" }}>
               {foodName}
             </h2>
           )}

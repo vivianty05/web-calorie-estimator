@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FoodEditor from "./FoodEditor";
 
-const BASE_URL = "http://127.0.0.1:8000";
+// const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "http://192.168.0.224:8000";
+// const BASE_URL = "http://172.24.2.255:8000";
 
 const EditFood = () => {
   const location = useLocation();

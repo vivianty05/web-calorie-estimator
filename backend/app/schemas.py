@@ -36,7 +36,7 @@ class IngredientResponse(IngredientBase):   # Model for ingredients output
 class FoodEntryResponse(FoodEntryReview):     # Model for food output (to show history)
     id: int
     image_path: Optional[str]
-    total_calories: int
+    total_calories: Optional[int]
     timestamp: datetime
     ingredients: List[IngredientResponse]
     detected_image_path: Optional[str]

@@ -57,6 +57,7 @@
   border-radius: 10px;
   border: 1px solid #c8d5c2;
   color: #111827 !important;
+  /* color: #3b7f4e !important; */
   font-weight: 400 !important;
   background-color: white;
   height: 48px; /* ✅ Force consistent height */
