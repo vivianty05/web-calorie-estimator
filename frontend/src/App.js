@@ -5,15 +5,16 @@ import Upload from "./pages/Upload";
 import Review from "./pages/Review";
 import Calculate from "./pages/Calculate";
 import EditFood from "./pages/EditFood";
+import ScrollToTop from "./components/ScrollToTop"; // <-- Add this line
 import "./App.css";
 
 const App = () => {
   return (
     <Router>
+      <ScrollToTop /> {/* <-- Scroll restoration component */}
       <div className="app-container">
-        {/* Header directly in App.js */}
         <header className="app-header">
-          <h1 className="app-logo">FoodCal AI</h1>
+          <h1 className="app-logo">EatSmart</h1>
           <hr className="divider" />
         </header>
 
