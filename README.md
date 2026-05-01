@@ -1,4 +1,4 @@
-# A Web-Based Calorie Estimation System Using Computer Vision for Pre-Cooked Food Ingredient Recognition
+# EatSmart: Food Calorie Counter Web App
 
 A web-based application that uses computer vision to detect pre-cooked food ingredients from images and estimate their calorie content. Users can upload images of food ingredients, review detected items, adjust quantities and units, and calculate total calories.
 
@@ -17,6 +17,35 @@ Tracking calorie intake manually is often time-consuming and inaccurate, as it r
 ## Features and Demonstration
 
 ## Tech Stack
+![React](https://img.shields.io/badge/Frontend-React-blue)
+![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-blue)
+![Edamam](https://img.shields.io/badge/API-Edamam-lightgreen)
+![YOLOv8](https://img.shields.io/badge/Model-YOLOv8-orange)
+![CVAT](https://img.shields.io/badge/Tool-CVAT-black)
+
+### Frontend
+- **React**
+  - JavaScript library for building user interfaces with reusable components
+  - Used to build interactive pages: Upload, Review Detection, Calculate
+
+### Backend
+- **FastAPI**
+  - High-performance web framework for Python APIs
+  - Used to handle client requests, logic for calorie calculation, and communicate with the database
+  - Integrated Edamam API and YOLOv8 prediction responses
+
+### Database & API
+- **PostgreSQL**
+  - Open-source relational database for storing food entries and ingredient data 
+- **Edamam API**
+  - External service used to retrieve calorie values based on ingredient, quantity, and unit
+
+### Computer Vision Model
+- **YOLOv8**
+  - Real-time object detection model used to identify ingredients from uploaded images  
+- **CVAT**
+  - Annotation tool used to label ingredients and train/refine the YOLOv8 model
 
 ## Installation
  push an existing Git repository with the following command:
@@ -36,7 +65,7 @@ git push -uf origin main
 1. Vivian Theodora Yang
 2. Isabella Augustine Yang
 3. Jabrayil Mirzayev
-4. Enis 
+4. Enis Jaha
 
 
 
