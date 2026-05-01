@@ -16,6 +16,14 @@ Tracking calorie intake manually is often time-consuming and inaccurate, as it r
 
 ## Features and Demonstration
 
+### How does the web application work?
+<p align="center">
+  <img src="images/guide1.png" width="800"/>
+</p>
+<p align="center">
+  <img src="images/guide2.png" width="800"/>
+</p>
+
 ## Tech Stack
 ![React](https://img.shields.io/badge/Frontend-React-blue)
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green)
@@ -66,11 +74,3 @@ git push -uf origin main
 2. Isabella Augustine Yang
 3. Jabrayil Mirzayev
 4. Enis Jaha
-
-
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
