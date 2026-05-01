@@ -18,10 +18,10 @@ Tracking calorie intake manually is often time-consuming and inaccurate, as it r
 
 ### How does the web application work?
 <p align="center">
-  <img src="images/guide1.png" width="800"/>
+  <img src="visuals/guide1.png" width="600" height="400"/>
 </p>
 <p align="center">
-  <img src="images/guide2.png" width="800"/>
+  <img src="visuals/guide2.png" width="600" height="400"/>
 </p>
 
 ## Tech Stack
